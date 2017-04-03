@@ -1,0 +1,58 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "hash": "a88f49fb85ce4bd5ad3b47a9cda2bedd",
+    "content-hash": "c4d24cdeb95555ff43742cc9eb4a549c",
+    "packages": [
+        {
+            "name": "pear/structures_graph",
+            "version": "v1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pear/Structures_Graph.git",
+                "reference": "608fdc835a62fb238e61bd1cf0aaf6c7a4420b5c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pear/Structures_Graph/zipball/608fdc835a62fb238e61bd1cf0aaf6c7a4420b5c",
+                "reference": "608fdc835a62fb238e61bd1cf0aaf6c7a4420b5c",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Structures": "./"
+                }
+            },
+            "include-path": [
+                "./"
+            ],
+            "license": [
+                "PHP License"
+            ],
+            "authors": [
+                {
+                    "email": "sergiosgc@gmail.com",
+                    "name": "Sérgio Carvalho",
+                    "role": "Lead"
+                }
+            ],
+            "description": "More info available on: http://pear.php.net/package/Structures_Graph",
+            "support": {
+                "source": "https://github.com/pear/Structures_Graph"
+            },
+            "time": "2015-07-20 20:05:12"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": []
+}

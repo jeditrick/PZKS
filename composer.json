@@ -1,0 +1,14 @@
+{
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/pear/Structures_Graph"
+    }
+  ],
+  "require": {
+    "pear/Structures_Graph": "*"
+  },
+  "autoload": {
+    "psr-4": {"Acme\\": "src/"}
+  }
+}
