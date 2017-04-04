@@ -24,7 +24,7 @@ class Graph
 
     public function addNode($id)
     {
-        $node  = $this->graph->createVertex($id);
+        $node  = $this->graph->createVertex($id, true);
         if($this->graphType == 1){
             $node->setAttribute('graphviz.shape', 'circle');
         }else{
@@ -87,5 +87,19 @@ class Graph
     {
         $algo = new ConnectedComponents($this->graph);
         return $algo->createGraphsComponents();
+    }
+
+    public function readFromFile($file)
+    {
+        $raw_data = explode("\n", file_get_contents(dirname(__DIR__).'/'.$file));
+        $new = new Graph();
+        $new->graphType = $this->graphType;
+        foreach($raw_data as $edge){
+            $nodes = explode(' ', $edge);
+            $new->addNode($nodes[0]);
+            $new->addNode($nodes[1]);
+            $new->addEdge($nodes[0], $nodes[1]);
+        }
+        $this->graph = $new->graph;
     }
 }

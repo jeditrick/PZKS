@@ -26,7 +26,8 @@ while (!$last_line) {
     echo "5. Get graph image\n";
     echo "6. Check for cycle\n";
     echo "7. Check connectivity\n";
-    echo "8. Exit\n";
+    echo "8. Read from file\n";
+    echo "9. Exit\n";
     $next_line = fgets($fp, 1024); // read the special file to get the user input from keyboard
     switch(trim($next_line)){
         case 1:
@@ -60,6 +61,11 @@ while (!$last_line) {
             echo $graph->checkConnectivity()?"Graph is connected\n":"Graph isn't connected\n";
             break;
         case 8:
+            echo "File name: \n";
+            $file_name = trim(fgets($fp, 1024));
+            $graph->readFromFile($file_name);
+            break;
+        case 9:
             $last_line = true;
             break;
     }
