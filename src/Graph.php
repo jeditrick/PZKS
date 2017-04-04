@@ -102,4 +102,22 @@ class Graph
         }
         $this->graph = $new->graph;
     }
+
+    public function addNodeWeight($node_weight)
+    {
+        $node = $this->graph->getVertex(trim($node_weight[0]));
+        $node->setAttribute('graphviz.label', trim($node_weight[0])." ({$node_weight[1]})");
+    }
+
+    public function addEdgeWeigh($node_one_key, $node_two_key, $weight)
+    {
+        $node_one = $this->graph->getVertex($node_one_key);
+        $node_two = $this->graph->getVertex($node_two_key);
+        $edges = $node_one->getEdges();
+        foreach ($edges as $edge) {
+            if ($edge->isConnection($node_one, $node_two)) {
+                $edge->setAttribute('graphviz.label', $weight);
+            }
+        }
+    }
 }

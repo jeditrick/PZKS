@@ -27,7 +27,9 @@ while (!$last_line) {
     echo "6. Check for cycle\n";
     echo "7. Check connectivity\n";
     echo "8. Read from file\n";
-    echo "9. Exit\n";
+    echo "9. Add vertex weight\n";
+    echo "10. Add edge weight\n";
+    echo "11. Exit\n";
     $next_line = fgets($fp, 1024); // read the special file to get the user input from keyboard
     switch(trim($next_line)){
         case 1:
@@ -66,7 +68,21 @@ while (!$last_line) {
             $graph->readFromFile($file_name);
             break;
         case 9:
+            echo "Enter Node id and Node weight: \n";
+            $node_weight = explode(' ', trim(fgets($fp, 1024)));
+            $graph->addNodeWeight($node_weight);
+            break;
+        case 10:
+            echo "Enter Edge id and edge weight: \n";
+            $edge_weight = explode(' ', trim(fgets($fp, 1024)));
+            $graph->addEdgeWeigh($edge_weight[0], $edge_weight[1], $edge_weight[2]);
+            break;
+        case 11:
             $last_line = true;
             break;
     }
 }
+/*
+1 6 12 (2 3 4)
+2 4 (6 7)
+*/
