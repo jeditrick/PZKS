@@ -4,9 +4,200 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a88f49fb85ce4bd5ad3b47a9cda2bedd",
-    "content-hash": "c4d24cdeb95555ff43742cc9eb4a549c",
+    "content-hash": "72bc1eccd1c75af1bff3005a8dd3beb3",
     "packages": [
+        {
+            "name": "beberlei/assert",
+            "version": "v2.7.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/beberlei/assert.git",
+                "reference": "3ee3bc468a3ce4bbfc3d74f53c6cdb5242d39d1a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/beberlei/assert/zipball/3ee3bc468a3ce4bbfc3d74f53c6cdb5242d39d1a",
+                "reference": "3ee3bc468a3ce4bbfc3d74f53c6cdb5242d39d1a",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "php": ">=5.3"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.1.1",
+                "phpunit/phpunit": "^4|^5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Assert\\": "lib/Assert"
+                },
+                "files": [
+                    "lib/Assert/functions.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-2-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Benjamin Eberlei",
+                    "email": "kontakt@beberlei.de",
+                    "role": "Lead Developer"
+                },
+                {
+                    "name": "Richard Quadling",
+                    "email": "rquadling@gmail.com",
+                    "role": "Collaborator"
+                }
+            ],
+            "description": "Thin assertion library for input validation in business models.",
+            "keywords": [
+                "assert",
+                "assertion",
+                "validation"
+            ],
+            "time": "2017-03-14T18:06:52+00:00"
+        },
+        {
+            "name": "clue/graph",
+            "version": "v0.9.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/clue/graph.git",
+                "reference": "0336a4d5229fa61a20ccceaeab25e52ac9542700"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/clue/graph/zipball/0336a4d5229fa61a20ccceaeab25e52ac9542700",
+                "reference": "0336a4d5229fa61a20ccceaeab25e52ac9542700",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0"
+            },
+            "suggest": {
+                "graphp/algorithms": "Common graph algorithms, such as Dijkstra and Moore-Bellman-Ford (shortest path), minimum spanning tree (MST), Kruskal, Prim and many more..",
+                "graphp/graphviz": "GraphViz graph drawing / DOT output"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Fhaculty\\Graph\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A mathematical graph/network library written in PHP",
+            "homepage": "https://github.com/clue/graph",
+            "keywords": [
+                "edge",
+                "graph",
+                "mathematical",
+                "network",
+                "vertex"
+            ],
+            "time": "2015-03-07T18:11:31+00:00"
+        },
+        {
+            "name": "graphp/algorithms",
+            "version": "v0.8.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/graphp/algorithms.git",
+                "reference": "81db4049c35730767ec8f97fb5c4844234b86cef"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/graphp/algorithms/zipball/81db4049c35730767ec8f97fb5c4844234b86cef",
+                "reference": "81db4049c35730767ec8f97fb5c4844234b86cef",
+                "shasum": ""
+            },
+            "require": {
+                "clue/graph": "~0.9.0|~0.8.0",
+                "php": ">=5.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Graphp\\Algorithms\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Christian Lück",
+                    "email": "christian@lueck.tv"
+                }
+            ],
+            "description": "Common mathematical graph algorithms",
+            "homepage": "https://github.com/graphp/algorithms",
+            "keywords": [
+                "Graph algorithms",
+                "dijkstra",
+                "kruskal",
+                "minimum spanning tree",
+                "moore-bellman-ford",
+                "prim",
+                "shortest path"
+            ],
+            "time": "2015-03-08T10:12:01+00:00"
+        },
+        {
+            "name": "graphp/graphviz",
+            "version": "v0.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/graphp/graphviz.git",
+                "reference": "2676522dfcd907fd3cb52891ea64a052c4ac4c2a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/graphp/graphviz/zipball/2676522dfcd907fd3cb52891ea64a052c4ac4c2a",
+                "reference": "2676522dfcd907fd3cb52891ea64a052c4ac4c2a",
+                "shasum": ""
+            },
+            "require": {
+                "clue/graph": "~0.9.0|~0.8.0",
+                "graphp/algorithms": "~0.8.0",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Graphp\\GraphViz\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "GraphViz graph drawing for mathematical graph/network",
+            "homepage": "https://github.com/graphp/graphviz",
+            "keywords": [
+                "dot output",
+                "graph drawing",
+                "graph image",
+                "graphviz"
+            ],
+            "time": "2015-03-08T10:30:28+00:00"
+        },
         {
             "name": "pear/structures_graph",
             "version": "v1.1.1",
@@ -44,7 +235,61 @@
             "support": {
                 "source": "https://github.com/pear/Structures_Graph"
             },
-            "time": "2015-07-20 20:05:12"
+            "time": "2015-07-20T20:05:12+00:00"
+        },
+        {
+            "name": "php-school/cli-menu",
+            "version": "2.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-school/cli-menu.git",
+                "reference": "f08d25e2818d9e2e60286cef4a11b45fd8c72de3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-school/cli-menu/zipball/f08d25e2818d9e2e60286cef4a11b45fd8c72de3",
+                "reference": "f08d25e2818d9e2e60286cef4a11b45fd8c72de3",
+                "shasum": ""
+            },
+            "require": {
+                "beberlei/assert": "^2.4",
+                "ext-posix": "*",
+                "php": ">=5.6"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~5.0",
+                "squizlabs/php_codesniffer": "~2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PhpSchool\\CliMenu\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Woodward",
+                    "email": "mikeymike.mw@gmail.com"
+                },
+                {
+                    "name": "Aydin Hassan",
+                    "email": "aydin@hotmail.com"
+                }
+            ],
+            "description": "A command line menu helper in PHP",
+            "keywords": [
+                "cli",
+                "console",
+                "menu",
+                "php-school",
+                "phpschool",
+                "terminal"
+            ],
+            "time": "2017-03-01T21:55:27+00:00"
         }
     ],
     "packages-dev": [],

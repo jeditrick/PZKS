@@ -1,3 +1,4 @@
 vendor/
 *.txt
 .idea/
+.php_cs.cache
