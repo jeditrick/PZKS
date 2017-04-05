@@ -1,8 +1,6 @@
 <?php
 
 use Acme\Graph;
-use PhpSchool\CliMenu\CliMenu;
-use PhpSchool\CliMenu\CliMenuBuilder;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
@@ -27,9 +25,9 @@ while (!$last_line) {
     echo "6. Check for cycle\n";
     echo "7. Check connectivity\n";
     echo "8. Read from file\n";
-    echo "9. Add vertex weight\n";
+    echo "9. Add node weight\n";
     echo "10. Add edge weight\n";
-    echo "11. Exit\n";
+    echo "11. Generate graph\n";
     $next_line = fgets($fp, 1024); // read the special file to get the user input from keyboard
     switch(trim($next_line)){
         case 1:
@@ -51,7 +49,7 @@ while (!$last_line) {
             echo "Node ids: \n";
             $nodes = explode(' ', trim(fgets($fp, 1024)));
             $graph->removeEdge($nodes[0], $nodes[1]);
-            break;break;
+            break;
         case 5:
             $graph->display();
 
@@ -70,15 +68,17 @@ while (!$last_line) {
         case 9:
             echo "Enter Node id and Node weight: \n";
             $node_weight = explode(' ', trim(fgets($fp, 1024)));
-            $graph->addNodeWeight($node_weight);
+            $graph->setNodeWeight($node_weight);
             break;
         case 10:
             echo "Enter Edge id and edge weight: \n";
             $edge_weight = explode(' ', trim(fgets($fp, 1024)));
-            $graph->addEdgeWeigh($edge_weight[0], $edge_weight[1], $edge_weight[2]);
+            $graph->addEdgeWeight($edge_weight[0], $edge_weight[1], $edge_weight[2]);
             break;
         case 11:
-            $last_line = true;
+            echo "Enter min node weight, max node weight, node count, min edge weight, max edge weight: \n";
+            $params = explode(' ', trim(fgets($fp, 1024)));
+            $graph->generateGraph($params[0], $params[1], $params[2], $params[3], $params[4], $params[5]);
             break;
     }
 }
