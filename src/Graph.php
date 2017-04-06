@@ -8,7 +8,6 @@ use Graphp\GraphViz\GraphViz;
 class Graph
 {
     protected $graphType;
-    const NODE_GENERATION_ATTEMPTS = 10;
 
     /**
      * @param mixed $graphType
@@ -123,7 +122,7 @@ class Graph
         }
     }
 
-    public function generateGraph($min_node_weight, $max_node_weight, $node_count, $min_edge_weight, $max_edge_weight, $coleration)
+    public function generateGraph($min_node_weight, $max_node_weight, $node_count, $min_edge_weight, $max_edge_weight, $correlation)
     {
         $total_nodes_weight = 0;
         foreach (range(0, $node_count-1) as $node_id) {
@@ -133,24 +132,34 @@ class Graph
             $this->setNodeWeight($node_id, $node_weight);
         }
 
-        $total_edges_weight = (int)($total_nodes_weight/$coleration - $total_nodes_weight);
+        $total_edges_weight = (int)($total_nodes_weight/$correlation - $total_nodes_weight);
 
-        while($total_edges_weight > 0){
-            $edge_weight = rand($min_edge_weight, min($total_edges_weight, $max_edge_weight));
+        while ($total_edges_weight > 0) {
+            if ($total_edges_weight < $min_edge_weight) {
+                $edge_weight = $total_edges_weight;
+            } else {
+                $edge_weight = rand($min_edge_weight, min($total_edges_weight, $max_edge_weight));
+            }
+
             $edge_nodes = $this->getNodes($this->graph->getVertices());
-            $edge = $this->addEdge($edge_nodes[0]->getId(), $edge_nodes[1]->getId());
-            $edge->setWeight($edge_weight);
+
+            if (count($edge_nodes[0]->getEdgesTo($edge_nodes[1])) > 0) {
+                $edge = $edge_nodes[0]->getEdgesTo($edge_nodes[1])->getEdgeFirst();
+            } else {
+                $edge = $this->addEdge($edge_nodes[0]->getId(), $edge_nodes[1]->getId());
+            }
+
+            $edge->setWeight($edge->getWeight() + $edge_weight);
             $total_edges_weight -= $edge_weight;
         }
     }
 
     private function getNodes($nodes)
     {
-        $max_attempts = self::NODE_GENERATION_ATTEMPTS;
-        while($max_attempts-- > 0){
+        while (true) {
             $node1 = $nodes->getVertexId(rand(0, count($nodes)-1));
             $node2 = $nodes->getVertexId(rand(0, count($nodes)-1));
-            if(count($node1->getEdgesTo($node2)) == 0 && count($node2->getEdgesTo($node1)) == 0 && $node1->getId() != $node2->getId()){
+            if (count($node2->getEdgesTo($node1)) == 0 && $node1->getId() < $node2->getId()) {
                 return [$node1, $node2];
             }
         }

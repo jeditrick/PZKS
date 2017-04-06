@@ -7,13 +7,11 @@ require_once __DIR__ . '/vendor/autoload.php';
 $fp = fopen('php://stdin', 'r');
 
 print "Choose graph type 1 - task graph, 0 - system graph.\n";
+
 $graph_type = fgets($fp, 1024);
 $graph = new Graph();
 $graph->setGraphType(trim($graph_type));
-
 $last_line = false;
-
-
 
 while (!$last_line) {
     echo "Choose action :\n";
@@ -52,7 +50,6 @@ while (!$last_line) {
             break;
         case 5:
             $graph->display();
-
             break;
         case 6:
             echo $graph->hasCycle()?"Graph has cycle\n":"Graph has no cycle\n";
@@ -68,7 +65,7 @@ while (!$last_line) {
         case 9:
             echo "Enter Node id and Node weight: \n";
             $node_weight = explode(' ', trim(fgets($fp, 1024)));
-            $graph->setNodeWeight($node_weight);
+            $graph->setNodeWeight($node_weight[0], $node_weight[1]);
             break;
         case 10:
             echo "Enter Edge id and edge weight: \n";
@@ -76,7 +73,7 @@ while (!$last_line) {
             $graph->addEdgeWeight($edge_weight[0], $edge_weight[1], $edge_weight[2]);
             break;
         case 11:
-            echo "Enter min node weight, max node weight, node count, min edge weight, max edge weight: \n";
+            echo "Enter min node weight, max node weight, node count, min edge weight, max edge weight, correlation: \n";
             $params = explode(' ', trim(fgets($fp, 1024)));
             $graph->generateGraph($params[0], $params[1], $params[2], $params[3], $params[4], $params[5]);
             break;
