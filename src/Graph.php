@@ -97,8 +97,10 @@ class Graph
         foreach ($raw_data as $edge) {
             $nodes = explode(' ', $edge);
             $new->addNode($nodes[0]);
-            $new->addNode($nodes[1]);
-            $new->addEdge($nodes[0], $nodes[1]);
+            if(count($nodes) > 1){
+                $new->addNode($nodes[1]);
+                $new->addEdge($nodes[0], $nodes[1]);
+            }
         }
         $this->graph = $new->graph;
     }
