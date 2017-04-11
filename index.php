@@ -15,7 +15,7 @@ $graph->setGraphType(trim($graph_type));
 $last_line = false;
 
 while (!$last_line) {
-    echo "Choose action :\n";
+    echo "\nChoose action :\n";
     echo "1. Add node\n";
     echo "2. Add edge\n";
     echo "3. Remove node\n";
@@ -29,6 +29,7 @@ while (!$last_line) {
     echo "11. Generate graph\n";
     echo "12. Sort nodes by out coming edges \n";
     echo "13. Sort nodes by critical path \n";
+    echo "14. Sort nodes by normalized critical path \n";
     $next_line = fgets($fp, 1024); // read the special file to get the user input from keyboard
     switch(trim($next_line)){
         case 1:
@@ -64,6 +65,13 @@ while (!$last_line) {
             echo "File name: \n";
             $file_name = trim(fgets($fp, 1024));
             $graph->readFromFile($file_name);
+            $graph->setNodeWeight(0, 6);
+            $graph->setNodeWeight(1, 1);
+            $graph->setNodeWeight(2, 4);
+            $graph->setNodeWeight(3, 25);
+            $graph->setNodeWeight(4, 5);
+            $graph->setNodeWeight(5, 10);
+            $graph->setNodeWeight(6, 2);
             break;
         case 9:
             echo "Enter Node id and Node weight: \n";
@@ -81,12 +89,13 @@ while (!$last_line) {
             $graph->generateGraph($params[0], $params[1], $params[2], $params[3], $params[4], $params[5]);
             break;
         case 12:
-            $graph->readFromFile('graph.txt');
-            echo (new SortAlgorithm($graph))->sortByOutgoingEdges();
+            echo (new SortAlgorithm($graph))->sortByOutgoingEdges()->getSortedNodes();
             break;
         case 13:
-            $graph->readFromFile('graph.txt');
-            echo (new SortAlgorithm($graph))->sortByCriticalNodeCount();
+            echo (new SortAlgorithm($graph))->sortByCriticalNodeCount()->getSortedNodes();
+            break;
+        case 14:
+            echo (new SortAlgorithm($graph))->sortByNormalizedCriticalPath()->getSortedNodes();
             break;
     }
 }

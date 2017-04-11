@@ -8,8 +8,9 @@ use Graphp\Algorithms\ShortestPath\BreadthFirst;
 
 class MyBfs extends BreadthFirst
 {
-    public function getEdgesMap()
+    public function getCriticalPathes($last_node_id)
     {
+        $critical_pathes = [];
         $vertexQueue = array();
         $edges = array();
 
@@ -30,11 +31,15 @@ class MyBfs extends BreadthFirst
             $vertexCurrent = array_shift($vertexQueue);
             if ($vertexCurrent) {
                 $edgesCurrent = $edges[$vertexCurrent->getId()];
+                if($vertexCurrent->getId() == $last_node_id){
+                    $critical_pathes[] = $edgesCurrent;
+                }
             }
+
             // untill queue is empty
         } while ($vertexCurrent);
 
-        return $edges;
+        return $critical_pathes;
     }
 
 
