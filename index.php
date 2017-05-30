@@ -1,9 +1,34 @@
 <?php
 
 use Acme\Graph;
+use Acme\Planning\FirstFreeAlgorithm;
 use Acme\SortAlgorithm;
 
 require_once __DIR__ . '/vendor/autoload.php';
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+$system = new Graph(0);
+$system->readFromFile('system.txt');
+$task = new Graph(1);
+$task->readFromFile('task.txt');
+$task->setNodeWeight(0, 4);
+$task->setNodeWeight(1, 2);
+$task->setNodeWeight(2, 5);
+$task->setNodeWeight(3, 1);
+$task->setNodeWeight(4, 2);
+$algorithm_id = 2;
+switch($algorithm_id){
+    case 2:
+        $planning_algorithm = new FirstFreeAlgorithm();
+        break;
+    case 4:
+        break;
+}
+$planning_algorithm->execute($task, $system);
+
+die;
+
 
 $fp = fopen('php://stdin', 'r');
 
@@ -30,6 +55,7 @@ while (!$last_line) {
     echo "12. Sort nodes by out coming edges \n";
     echo "13. Sort nodes by critical path \n";
     echo "14. Sort nodes by normalized critical path \n";
+    echo "15. Planning \n";
     $next_line = fgets($fp, 1024); // read the special file to get the user input from keyboard
     switch(trim($next_line)){
         case 1:
@@ -72,6 +98,7 @@ while (!$last_line) {
             $graph->setNodeWeight(4, 5);
             $graph->setNodeWeight(5, 10);
             $graph->setNodeWeight(6, 2);
+
             break;
         case 9:
             echo "Enter Node id and Node weight: \n";
@@ -96,6 +123,9 @@ while (!$last_line) {
             break;
         case 14:
             echo (new SortAlgorithm($graph))->sortByNormalizedCriticalPath()->getSortedNodes();
+            break;
+        case 15:
+            echo "Enter planning algorithm: \n";
             break;
     }
 }
