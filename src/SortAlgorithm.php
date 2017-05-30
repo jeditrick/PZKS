@@ -17,7 +17,7 @@ class SortAlgorithm
     public function __construct(Graph $graph)
     {
         $this->graph = $graph;
-        $this->nodes = $graph->graph->getVertices();
+        $this->nodes = $graph->getVertices();
     }
 
     public function sortByOutgoingEdges()
@@ -33,9 +33,13 @@ class SortAlgorithm
     }
 
 
-    public function getSortedNodes()
+    /**
+     * @param bool|false $as_array
+     * @return string|array
+     */
+    public function getSortedNodes($as_array = false)
     {
-        return json_encode($this->sorted_nodes);
+        return $as_array ? $this->sorted_nodes : json_encode($this->sorted_nodes);
     }
 
 
