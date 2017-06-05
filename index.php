@@ -21,12 +21,13 @@ $task->setNodeWeight(4, 2);
 $algorithm_id = 2;
 switch($algorithm_id){
     case 2:
-        $planning_algorithm = new FirstFreeAlgorithm();
+        $planning_algorithm = new FirstFreeAlgorithm($task, $system, 1);
         break;
     case 4:
+        $planning_algorithm = new FirstFreeAlgorithm($task, $system, 1);
         break;
 }
-$planning_algorithm->execute($task, $system);
+$planning_algorithm->execute();
 
 die;
 
@@ -67,7 +68,7 @@ while (!$last_line) {
         case 2:
             echo "Node ids: \n";
             $nodes = explode(' ', trim(fgets($fp, 1024)));
-            $graph->addEdge($nodes[0], $nodes[1]);
+            $graph->addEdge($nodes[0], $nodes[1]); //todo
             break;
         case 3:
             echo "Node id: \n";
