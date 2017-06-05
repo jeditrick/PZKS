@@ -9,14 +9,15 @@ class FirstFreeAlgorithm extends AbstractPlanningAlgorithm
         do {
             foreach ($plan->getProcessors() as $processor) {
                 /* @var $processor Processor */
-                if ($processor->canCompute($this->ticks) && $this->tasksList) {
+                $processor->beep($plan->ticks);
+                if ($processor->canCompute() && $this->tasksList) {
                     $processor->putTask(array_shift($this->tasksList));
                 }
 
                 $processor->execute();
             }
 
-            $this->ticks++;
+            $plan->ticks++;
         } while (!$plan->isComplete());
 
         $plan->outputToConsole();

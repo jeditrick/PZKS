@@ -12,6 +12,8 @@ namespace Acme\Planning;
 class Plan
 {
     private $processors;
+    public $ticks = 0;
+
 
     public function addProcessor(Processor $processor)
     {

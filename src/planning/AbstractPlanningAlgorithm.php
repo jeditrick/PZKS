@@ -14,8 +14,8 @@ abstract class AbstractPlanningAlgorithm
     private $system;
     protected $tasksList;
     protected $plan;
-    protected $ticks = 0;
 
+    abstract function execute();
 
     public function __construct(Graph $task, Graph $system, $sort_id){
         $this->sortId =  $sort_id;

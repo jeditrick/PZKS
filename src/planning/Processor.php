@@ -42,26 +42,23 @@ class Processor
         return self::$processors;
     }
 
+    public static function getFreeProcessors()
+    {
+        return array_filter(self::$processors, function ($processor) {
+            /* @var $processor Processor */
+            return $processor->getStatus() == self::STATUS_FREE;
+        });
+    }
+
     public static function updateProcessor($id, $field, $value)
     {
         self::$processors[$id]->{$field} = $value;
         return self::$processors[$id];
     }
 
-    public function canCompute($current_tick)
+    public function canCompute()
     {
-        if ($current_tick >= $this->loadTime && !in_array($this->status, [self::STATUS_WAITING])) {
-            if ($this->currentTask) {
-                Task::updateTask($this->currentTask->getId(), 'status', Task::STATUS_COMPUTED);
-                $this->computedTasks[$this->currentTask->getId()] = $this->currentTask;
-                $this->currentTask = null;
-                $this->status = self::STATUS_FREE;
-            }
-
-            return true;
-        }
-
-        return false;
+        return $this->status == self::STATUS_FREE;
     }
 
     public function putTask(Task $task)
@@ -150,6 +147,26 @@ class Processor
     public function getJournal()
     {
         return $this->journal;
+    }
+
+    /**
+     * @return int
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    public function beep($current_tick)
+    {
+        if ($current_tick >= $this->loadTime && !in_array($this->status, [self::STATUS_WAITING])) {
+            if ($this->currentTask) {
+                Task::updateTask($this->currentTask->getId(), 'status', Task::STATUS_COMPUTED);
+                $this->computedTasks[$this->currentTask->getId()] = $this->currentTask;
+                $this->currentTask = null;
+                $this->status = self::STATUS_FREE;
+            }
+        }
     }
 
 }
