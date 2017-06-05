@@ -30,8 +30,9 @@ class FirstFreeAlgorithm
             }
 
             $ticks++;
-        }while(!$plan->isComplete());
-        $k=0;
+        } while (!$plan->isComplete());
+
+        $plan->outputToConsole();
     }
 
     /**

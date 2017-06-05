@@ -3,6 +3,7 @@
 namespace Acme\Planning;
 
 use Acme\Graph;
+use Fhaculty\Graph\Edge\Directed;
 
 class Task
 {
@@ -13,6 +14,7 @@ class Task
     private $node;
     private $requiredTasks;
     private $status = self::STATUS_NOT_COMPUTED;
+    private $processor;
     private static $tasks;
 
     public function __construct(Graph $graph, $id){
@@ -23,7 +25,7 @@ class Task
         self::addTask($this);
     }
 
-    public function addTask(Task &$task)
+    public static function addTask(Task &$task)
     {
         self::$tasks[$task->getId()] = $task;
     }
@@ -73,6 +75,7 @@ class Task
     {
         $node = $this->node;
         foreach ($node->getEdgesIn() as $edge) {
+            /* @var $edge Directed */
             $this->requiredTasks[] = Task::getTask($edge->getVertexStart()->getId());
         }
     }
@@ -123,5 +126,13 @@ class Task
     public function getRequiredTasks()
     {
         return $this->requiredTasks;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProcessor()
+    {
+        return $this->processor;
     }
 }

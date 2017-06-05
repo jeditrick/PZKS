@@ -29,11 +29,25 @@ class Plan
     public function isComplete()
     {
         foreach (Task::getTask() as $task) {
+            /* @var $task Task */
             if($task->getStatus() == Task::STATUS_NOT_COMPUTED){
                 return false;
             }
         }
 
         return true;
+    }
+
+    public function outputToConsole()
+    {
+        foreach ($this->processors as $processor) {
+            /* @var $processor Processor */
+            echo sprintf("Processor № %d :\n", $processor->getId());
+            echo "{\n";
+            foreach ($processor->getJournal() as $action_time => $action) {
+                echo sprintf("\t[ %s ] => %s\n", $action_time, $action);
+            }
+            echo "}\n";
+        }
     }
 }
