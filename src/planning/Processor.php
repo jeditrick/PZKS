@@ -60,7 +60,6 @@ class Processor
                     !in_array($computed_parent->getId(), array_keys($this->transferedParentTasks))
                     && !in_array($computed_parent->getId(), array_keys($this->computedTasks))
                 ) {
-                    $computed_parent = Task::getTask($computed_parent->getId());
                     if ($computed_parent->getStatus() == Task::STATUS_COMPUTED) {
                         $this->transferedParentTasks[$computed_parent->getId()] = $computed_parent;
                         $parent_data_transfer_time += $this->currentTask

@@ -19,7 +19,6 @@ class FirstFreeAlgorithm
         $plan = $this->getPlan($system);
         $ticks = 0;
 
-        $foo = Task::getTask();
         do {
             foreach ($plan->getProcessors() as $processor) {
                 /* @var $processor Processor */
@@ -32,7 +31,6 @@ class FirstFreeAlgorithm
 
             $ticks++;
         }while(!$plan->isComplete());
-        $k=0;
     }
 
     /**

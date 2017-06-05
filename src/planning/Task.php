@@ -20,7 +20,12 @@ class Task
         $this->id = $id;
         $this->node = $graph->getVertex($this->id);
         $this->setRequiredTasks();
-        self::$tasks[$id] = $this;
+        self::addTask($this);
+    }
+
+    public function addTask(Task &$task)
+    {
+        self::$tasks[$task->getId()] = $task;
     }
 
     /**
