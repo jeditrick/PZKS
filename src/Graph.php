@@ -43,12 +43,13 @@ class Graph extends GraphLib
         $this->getVertex($id)->destroy();
     }
 
-    public function removeEdge($node_one_key, $node_two_key)
+    public function deleteEdge($node_one_key, $node_two_key)
     {
         $node_one = $this->getVertex($node_one_key);
         $node_two = $this->getVertex($node_two_key);
         $edges = $node_one->getEdges();
         foreach ($edges as $edge) {
+            /* @var $edge Base */
             if ($edge->isConnection($node_one, $node_two)) {
                 $edge->destroy();
             }

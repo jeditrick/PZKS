@@ -77,7 +77,7 @@ while (!$last_line) {
         case 4:
             echo "Node ids: \n";
             $nodes = explode(' ', trim(fgets($fp, 1024)));
-            $graph->removeEdge($nodes[0], $nodes[1]);
+            $graph->deleteEdge($nodes[0], $nodes[1]);
             break;
         case 5:
             $graph->display();
