@@ -31,6 +31,7 @@ class FirstFreeAlgorithm
 
             $ticks++;
         }while(!$plan->isComplete());
+        $k=0;
     }
 
     /**
@@ -42,7 +43,7 @@ class FirstFreeAlgorithm
         $plan = new Plan;
         $sorted_processors = array_keys((new SortAlgorithm($system))->sortByOutgoingEdges()->getSortedNodes(true));
         foreach ($sorted_processors as $processor_id) {
-            $plan->addProcessor(new Processor($processor_id));
+            $plan->addProcessor(new Processor($system, $processor_id));
         }
 
         return $plan;

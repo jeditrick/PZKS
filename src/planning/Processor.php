@@ -2,6 +2,8 @@
 
 namespace Acme\Planning;
 
+use Acme\Graph;
+
 /* @property Task currentTask */
 class Processor
 {
@@ -11,14 +13,17 @@ class Processor
     private $transferedParentTasks;
     private $id;
     private $status = 0;
+    private $journal;
 
     const STATUS_FREE = 0;
     const STATUS_WAITING = 1;
-    const STATUS_BUSY = 2;
+    const STATUS_COMPUTING = 2;
 
-    public function __construct($id)
+    public function __construct(Graph $graph, $id)
     {
+        $this->graph = $graph;
         $this->id = $id;
+        $this->links  = $this->graph->getVertex($this->id)->getEdges();
     }
 
     public function canCompute($current_tick)
@@ -53,6 +58,7 @@ class Processor
     public function getInfoFromParents()
     {
         $parent_data_transfer_time = 0;
+        $max_parent_data_transfer_time = 0;
         if ($computed_parents = $this->currentTask->getComputedParents()) {
             foreach ($computed_parents as $computed_parent) {
                 /* @var $computed_parent Task */
@@ -62,28 +68,42 @@ class Processor
                 ) {
                     if ($computed_parent->getStatus() == Task::STATUS_COMPUTED) {
                         $this->transferedParentTasks[$computed_parent->getId()] = $computed_parent;
-                        $parent_data_transfer_time += $this->currentTask
+                        $parent_data_transfer_time = $this->currentTask
                             ->getGraph()
                             ->getEdge(
                                 $computed_parent->getId(),
                                 $this->currentTask->getId()
                             )
                             ->getWeight();
+                        $this->journal[$this->loadTime.' - '.($this->loadTime + $parent_data_transfer_time)] = sprintf(
+                            "Transfer data from %s to %s",
+                            $computed_parent->getId(),
+                            $this->currentTask->getId()
+                        );
+                        $max_parent_data_transfer_time = max($max_parent_data_transfer_time, $parent_data_transfer_time);
                     }
                 }
             }
         }
+        $this->loadTime += $max_parent_data_transfer_time;
 
         return $parent_data_transfer_time;
     }
 
     public function execute()
     {
+        if($this->id == 0){
+            $k=0;
+        }
         if ($current_task = $this->currentTask) {
-            $this->loadTime += $this->getInfoFromParents();
+            $this->getInfoFromParents();
             if ($current_task->canCompute() && in_array($this->status, [self::STATUS_FREE, self::STATUS_WAITING]) ) {
+                $this->journal[$this->loadTime.' - '.($this->loadTime + $current_task->getComputingTime())] = sprintf(
+                    "Computing %s",
+                    $this->currentTask->getId()
+                );
                 $this->loadTime += $current_task->getComputingTime();
-                $this->status = self::STATUS_BUSY;
+                $this->status = self::STATUS_COMPUTING;
             } elseif( !$current_task->canCompute() ) {
                 $this->loadTime += 1;
                 $this->status = self::STATUS_WAITING;
