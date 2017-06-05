@@ -10,7 +10,11 @@ class Processor
     private $computedTasks;
     private $transferedParentTasks;
     private $id;
-    private $free = true;
+    private $status = 0;
+
+    const STATUS_FREE = 0;
+    const STATUS_WAITING = 1;
+    const STATUS_BUSY = 2;
 
     public function __construct($id)
     {
@@ -19,12 +23,12 @@ class Processor
 
     public function canCompute($current_tick)
     {
-        if ($current_tick > $this->loadTime) {
+        if ($current_tick >= $this->loadTime && !in_array($this->status, [self::STATUS_WAITING])) {
             if ($this->currentTask) {
                 Task::updateTask($this->currentTask->getId(), 'status', Task::STATUS_COMPUTED);
                 $this->computedTasks[$this->currentTask->getId()] = $this->currentTask;
                 $this->currentTask = null;
-                $this->free = true;
+                $this->status = self::STATUS_FREE;
             }
 
             return true;
@@ -52,8 +56,10 @@ class Processor
         if ($computed_parents = $this->currentTask->getComputedParents()) {
             foreach ($computed_parents as $computed_parent) {
                 /* @var $computed_parent Task */
-                if (!in_array($computed_parent->getId(), array_keys($this->transferedParentTasks))) {
-                    //todo: exclude transfer if tasks was computed on same processor
+                if (
+                    !in_array($computed_parent->getId(), array_keys($this->transferedParentTasks))
+                    && !in_array($computed_parent->getId(), array_keys($this->computedTasks))
+                ) {
                     $computed_parent = Task::getTask($computed_parent->getId());
                     if ($computed_parent->getStatus() == Task::STATUS_COMPUTED) {
                         $this->transferedParentTasks[$computed_parent->getId()] = $computed_parent;
@@ -76,9 +82,12 @@ class Processor
     {
         if ($current_task = $this->currentTask) {
             $this->loadTime += $this->getInfoFromParents();
-            if ($current_task->canCompute() && $this->free) {
+            if ($current_task->canCompute() && in_array($this->status, [self::STATUS_FREE, self::STATUS_WAITING]) ) {
                 $this->loadTime += $current_task->getComputingTime();
-                $this->free = false;
+                $this->status = self::STATUS_BUSY;
+            } elseif( !$current_task->canCompute() ) {
+                $this->loadTime += 1;
+                $this->status = self::STATUS_WAITING;
             }
         }
     }
