@@ -2,14 +2,18 @@
 
 use Acme\Graph;
 use Acme\Planning\FirstFreeAlgorithm;
+use Acme\Planning\NeighborPlanningAlgorithm;
 use Acme\SortAlgorithm;
+use Fhaculty\Graph\Edge\Directed;
+use Graphp\Algorithms\Tree\Undirected;
 
 require_once __DIR__ . '/vendor/autoload.php';
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-$system = new Graph(0);
+/*$system = new Graph(0);
 $system->readFromFile('system.txt');
+$foo = $system->getEdges();
 $task = new Graph(1);
 $task->readFromFile('task.txt');
 $task->setNodeWeight(0, 4);
@@ -20,14 +24,15 @@ $task->setNodeWeight(4, 2);
 $algorithm_id = 2;
 switch($algorithm_id){
     case 2:
-        $planning_algorithm = new FirstFreeAlgorithm();
+        $planning_algorithm = new FirstFreeAlgorithm($task, $system, 1);
         break;
     case 4:
+        $planning_algorithm = new NeighborPlanningAlgorithm($task, $system, 1);
         break;
 }
-$planning_algorithm->execute($task, $system);
+$planning_algorithm->execute();
 
-die;
+die;*/
 
 
 $fp = fopen('php://stdin', 'r');
@@ -66,7 +71,12 @@ while (!$last_line) {
         case 2:
             echo "Node ids: \n";
             $nodes = explode(' ', trim(fgets($fp, 1024)));
-            $graph->addEdge($nodes[0], $nodes[1]);
+            if($this->graphType == 1){
+                $edge = new Directed($this->getVertex($nodes[0]), $this->getVertex($nodes[1]));
+            } else {
+                $edge = new Undirected($this->getVertex($nodes[0]), $this->getVertex($nodes[1]));
+            }
+            $graph->addEdge($edge);
             break;
         case 3:
             echo "Node id: \n";
@@ -76,7 +86,7 @@ while (!$last_line) {
         case 4:
             echo "Node ids: \n";
             $nodes = explode(' ', trim(fgets($fp, 1024)));
-            $graph->removeEdge($nodes[0], $nodes[1]);
+            $graph->deleteEdge($nodes[0], $nodes[1]);
             break;
         case 5:
             $graph->display();
@@ -91,13 +101,11 @@ while (!$last_line) {
             echo "File name: \n";
             $file_name = trim(fgets($fp, 1024));
             $graph->readFromFile($file_name);
-            $graph->setNodeWeight(0, 6);
-            $graph->setNodeWeight(1, 1);
-            $graph->setNodeWeight(2, 4);
-            $graph->setNodeWeight(3, 25);
-            $graph->setNodeWeight(4, 5);
-            $graph->setNodeWeight(5, 10);
-            $graph->setNodeWeight(6, 2);
+            $graph->setNodeWeight(0, 4);
+            $graph->setNodeWeight(1, 2);
+            $graph->setNodeWeight(2, 5);
+            $graph->setNodeWeight(3, 1);
+            $graph->setNodeWeight(4, 2);
 
             break;
         case 9:
@@ -125,11 +133,33 @@ while (!$last_line) {
             echo (new SortAlgorithm($graph))->sortByNormalizedCriticalPath()->getSortedNodes();
             break;
         case 15:
-            echo "Enter planning algorithm: \n";
+            echo "Enter planning algorithm, task sorting algorithm, task graph file, system graph file: \n";
+            $params = explode(' ', trim(fgets($fp, 1024)));
+            $system = new Graph(0);
+            $system->readFromFile($params[3]);
+            $foo = $system->getEdges();
+            $task = new Graph(1);
+            $task->readFromFile($params[2]);
+            $task->setNodeWeight(0, 4);
+            $task->setNodeWeight(1, 2);
+            $task->setNodeWeight(2, 5);
+            $task->setNodeWeight(3, 1);
+            $task->setNodeWeight(4, 2);
+            switch($params[0]){
+                case 2:
+                    $planning_algorithm = new FirstFreeAlgorithm($task, $system, $params[1]);
+                    break;
+                case 4:
+                    $planning_algorithm = new NeighborPlanningAlgorithm($task, $system, $params[1]);
+                    break;
+            }
+            $planning_algorithm->execute();
             break;
     }
 }
 /*
 1 6 12 (2 3 4)
 2 4 (6 7)
+
+2 1 task.txt system.txt
 */

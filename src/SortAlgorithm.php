@@ -17,7 +17,7 @@ class SortAlgorithm
     public function __construct(Graph $graph)
     {
         $this->graph = $graph;
-        $this->nodes = $graph->graph->getVertices();
+        $this->nodes = $graph->getVertices();
     }
 
     public function sortByOutgoingEdges()
