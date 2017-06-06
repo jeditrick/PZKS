@@ -34,6 +34,10 @@ class Processor
         self::$processors[$processor->getId()] = $processor;
     }
 
+    /**
+     * @param null $id
+     * @return mixed|Processor
+     */
     public static function getProcessor($id = null)
     {
         if($id !== null){
@@ -167,6 +171,22 @@ class Processor
                 $this->status = self::STATUS_FREE;
             }
         }
+    }
+
+    /**
+     * @return array
+     */
+    public function getComputedTasks()
+    {
+        return $this->computedTasks;
+    }
+
+    /**
+     * @return array
+     */
+    public function getTransferredParentTasks()
+    {
+        return $this->transferredParentTasks;
     }
 
 }

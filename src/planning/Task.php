@@ -12,7 +12,7 @@ class Task
     private $id;
     private $graph;
     private $node;
-    private $requiredTasks;
+    private $requiredTasks = [];
     private $status = self::STATUS_NOT_COMPUTED;
     private $processor;
     private static $tasks;
