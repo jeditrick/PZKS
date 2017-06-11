@@ -9,6 +9,7 @@ class Task
 {
     const STATUS_NOT_COMPUTED = 0;
     const STATUS_COMPUTED = 1;
+    const STATUS_COMPUTING = 2;
     private $id;
     private $graph;
     private $node;

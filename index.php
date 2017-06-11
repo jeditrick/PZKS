@@ -11,17 +11,17 @@ require_once __DIR__ . '/vendor/autoload.php';
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-/*$system = new Graph(0);
+$system = new Graph(0);
 $system->readFromFile('system.txt');
 $foo = $system->getEdges();
 $task = new Graph(1);
 $task->readFromFile('task.txt');
-$task->setNodeWeight(0, 4);
 $task->setNodeWeight(1, 2);
-$task->setNodeWeight(2, 5);
+$task->setNodeWeight(2, 6);
 $task->setNodeWeight(3, 1);
-$task->setNodeWeight(4, 2);
-$algorithm_id = 2;
+$task->setNodeWeight(4, 5);
+$task->setNodeWeight(5, 1);
+$algorithm_id = 4;
 switch($algorithm_id){
     case 2:
         $planning_algorithm = new FirstFreeAlgorithm($task, $system, 1);
@@ -32,7 +32,7 @@ switch($algorithm_id){
 }
 $planning_algorithm->execute();
 
-die;*/
+die;
 
 
 $fp = fopen('php://stdin', 'r');
@@ -101,11 +101,11 @@ while (!$last_line) {
             echo "File name: \n";
             $file_name = trim(fgets($fp, 1024));
             $graph->readFromFile($file_name);
-            $graph->setNodeWeight(0, 4);
             $graph->setNodeWeight(1, 2);
-            $graph->setNodeWeight(2, 5);
+            $graph->setNodeWeight(2, 6);
             $graph->setNodeWeight(3, 1);
-            $graph->setNodeWeight(4, 2);
+            $graph->setNodeWeight(4, 5);
+            $graph->setNodeWeight(5, 1);
 
             break;
         case 9:
@@ -140,11 +140,11 @@ while (!$last_line) {
             $foo = $system->getEdges();
             $task = new Graph(1);
             $task->readFromFile($params[2]);
-            $task->setNodeWeight(0, 4);
             $task->setNodeWeight(1, 2);
-            $task->setNodeWeight(2, 5);
+            $task->setNodeWeight(2, 6);
             $task->setNodeWeight(3, 1);
-            $task->setNodeWeight(4, 2);
+            $task->setNodeWeight(4, 5);
+            $task->setNodeWeight(5, 1);
             switch($params[0]){
                 case 2:
                     $planning_algorithm = new FirstFreeAlgorithm($task, $system, $params[1]);

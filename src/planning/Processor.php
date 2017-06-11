@@ -67,6 +67,7 @@ class Processor
 
     public function putTask(Task $task)
     {
+        Task::updateTask($task->getId(), 'status', Task::STATUS_COMPUTING);
         $this->currentTask = $task;
         Task::updateTask($this->currentTask->getId(), 'processor', $this);
     }
